@@ -1,0 +1,22 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      docker: 19
+    commands:
+      - yum install zip unzip -y
+      - wget https://releases.hashicorp.com/terraform/"$TF_VERSION"/terraform_"$TF_VERSION"_linux_amd64.zip
+      - unzip -d /usr/local/bin/ terraform_"$TF_VERSION"_linux_amd64.zip
+  pre_build:
+    commands:
+      - terraform init -input=false -no-color terraform/
+      - terraform plan -input=false -no-color terraform/
+
+  build:
+    commands:
+      - terraform apply -input=false -auto-approve -no-color terraform/
+
+  post_build:
+    commands:
+      - echo terraform apply completed on `date`
