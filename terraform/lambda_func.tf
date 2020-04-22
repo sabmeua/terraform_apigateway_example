@@ -13,6 +13,7 @@ resource "aws_lambda_function" "foofunc" {
   runtime          = "nodejs12.x"
   memory_size      = 128
   timeout          = 10
+  publish          = true
 }
 
 resource "aws_lambda_alias" "foofunc-dev" {
